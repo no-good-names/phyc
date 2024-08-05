@@ -8,6 +8,12 @@ find_package(glfw3 REQUIRED)
 # GLAD
 add_subdirectory(libs/GLAD EXCLUDE_FROM_ALL)
 include_directories(libs/GLAD/include ${GLFW_INCLUDE_DIRS})
+include(FetchContent)
+FetchContent_Declare(
+        GLFW
+        GIT_REPOSITORY
+        GIT_TAG
+)
 
 add_executable(Phyc src/main.cpp)
 
