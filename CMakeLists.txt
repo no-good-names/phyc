@@ -3,10 +3,27 @@ project(Phyc C)
 
 set(CMAKE_C_STANDARD 99)
 
-find_package(glfw3 REQUIRED) # installed with local package manager
+include(FetchContent)
 
 # GLAD
 add_subdirectory(libs/GLAD EXCLUDE_FROM_ALL)
+
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libs/GLAD/include/glad/glad.h)
+	message(FATAL_ERROR "GLAD not found")
+endif()	
+
+# GLFW
+find_package(glfw)
+if(NOT glfw_FOUND)
+	include(FetchContent)
+	FetchContent_Declare(
+		glfw
+		GIT_REPOSITORY https://github.com/glfw/glfw
+	)
+	FetchContent_MakeAvailable(glfw)
+
+endif(NOT glfw_FOUND)
+
 include_directories(libs/GLAD/include ${GLFW_INCLUDE_DIRS})
 
 # GLOB source files
